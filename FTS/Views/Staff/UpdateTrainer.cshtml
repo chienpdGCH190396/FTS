@@ -1,0 +1,74 @@
+﻿@model FTS.Models.UserEntity
+
+@{
+    ViewBag.Title = "Update Trainer";
+}
+
+<h1 class="text-center" style="font-size: 55px; font-weight: 300;">UPDATE TRAINER</h1>
+<div class="mt-6 ml-6 mr-6">
+    @using (Html.BeginForm("UpdateTrainer", "Staff", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+        @Html.HiddenFor(m => m.Id)
+
+        @Html.HiddenFor(m => m.Email)
+
+        @Html.HiddenFor(m => m.Role)
+
+        @Html.HiddenFor(m => m.UserName)
+
+        @Html.HiddenFor(m => m.PasswordHash)
+
+        @Html.HiddenFor(m => m.SecurityStamp)
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Education, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.Education, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.WorkingPlace, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.WorkingPlace, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Telephone, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-10">
+                <select id="UserRoles" name="UserRoles" hidden>
+                    <option id="Staff" selected="true" value="Trainer">Trainer</option>
+                </select>
+            </div>
+        </div>
+
+        @Html.TextBoxFor(m => m.Role, new { @class = "form-control", Value = "Trainer", type = "hidden" })
+
+        <button type="submit" class="btn btn-primary" style="margin-right: 15px">Update</button>
+
+        <a href="@Url.Action("AllTrainers")" type="button" class="btn btn-primary">Cancel</a>
+
+     }
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

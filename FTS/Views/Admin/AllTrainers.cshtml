@@ -1,0 +1,96 @@
+﻿@model IEnumerable<FTS.Models.UserEntity>
+
+@{
+    ViewBag.Title = "All Trainers";
+}
+
+<h1 class="text-center" style="font-size: 55px; font-weight: 300;">MANAGE TRAINERS</h1>
+<div class="mt-6 ml-6 mr-6">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">@Html.DisplayNameFor(x => x.UserName)</th>
+                <th scope="col">@Html.DisplayNameFor(x => x.Name)</th>
+                <th scope="col">@Html.DisplayNameFor(x => x.Email)</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var b in Model)
+            {
+                <tr>
+                    <td></td>
+                    <td>@Html.DisplayFor(model => b.UserName)</td>
+                    <td>@Html.DisplayFor(model => b.Name)</td>
+                    <td>@Html.DisplayFor(model => b.Email)</td>
+                    <td>
+                        <a type="button"
+                           data-trainer="@String.Format("{0}|{1}",
+                       b.ToSeparatedString("|"),
+                       Url.Action("DeleteTrainerAccount", new {id = b.Id }))"
+                           data-toggle="modal" data-target="#DeleteTrainer" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section alertdialog{
+            <div class="modal" tabindex="-1" id="DeleteTrainer" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Delete Trainer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="deleteForm" method="post">
+                            <div class="modal-body">
+                                <fieldset disabled>
+                                    <div class="form-group">
+                                        <label for="username">Username</label>
+                                        <input type="text" class="form-control" id="username" name="username">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="username">Email</label>
+                                        <input type="text" class="form-control" id="email" name="email">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="username">Role</label>
+                                        <input type="text" class="form-control" id="role" name="role">
+                                    </div>
+                                    <p>Do you want to delete this account?</p>
+                                </fieldset>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" value="Delete">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </form>                      
+                    </div>
+                </div>
+            </div>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $('document').ready(function () {
+            $('a[data-trainer]').on('click', function (evt) {
+                let sData = $(this).attr('data-trainer').split("|");
+                console.log(sData);
+                $('#id').attr('value', sData[0]);
+                $('#username').attr('value', sData[2]);
+                $('#email').attr('value', sData[3]);
+                $('#role').attr('value', sData[4]);
+                $('#deleteForm').attr('action', sData[5]);
+            });
+        });
+    </script>
+}
+

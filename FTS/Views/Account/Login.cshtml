@@ -1,0 +1,59 @@
+﻿@using FTS.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log In";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<img src="~/images/FGW_logo_d.jpg" alt="">
+<div class="login">
+    <h2>Welcome to <h2>FPT Training System</h2></h2>
+    <br />
+    <h2>@ViewBag.Title</h2>
+    <section id="loginForm">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.UserName, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="mb-3">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 mb-3">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div style="text-align: center">
+                    <button type="submit" class="btn btn-primary ">Login</button>
+                </div>
+            </div>
+
+        }
+    </section>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+

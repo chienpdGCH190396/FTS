@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNet.Identity
+
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:white">
+    <a class="navbar-brand" href="@Url.Action("Index", "Admin")" style="margin-left:25px">FPT Training System</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-light my-2 my-sm-0" style="float:right" type="submit">Logout</a>        
+        }
+    </div>
+</nav>
+
+
+<div class="wrapper d-flex">
+    <div class="sidebar" style="margin-top: 90px">
+        <div class="user-details">
+            <div class="pull-left">
+                <img src="~/images/img_avatar.png" style="width: 45px;" />
+            </div>
+            <div class="user-info">
+                <b style="font-size:25px">      
+                    @ViewBag.YourName
+                </b>
+                
+                <p class="text-muted m-0 text-capitalize">Administrator</p>
+            </div>
+        </div>
+        <div id="sidebar-menu" ng-controller="sliderMenu" class="ng-scope">
+
+            <ul>
+                <li class="has_sub">
+                    <a href="#" class="mswaves-effect">Manage Staff<span class="fas fa-caret-down first"></span></a>
+                    <ul class="mslist-unstyled">
+                        <li><a href="@Url.Action("CreateStaff")">Create Staff</a></li>
+                        <li><a href="@Url.Action("AllStaffs")">All Staffs</a></li>
+                    </ul>
+                </li>
+                <li class="has_sub">
+                    <a href="#" class="mtwaves-effect">Manage Trainer<span class="fas fa-caret-down second"></span></a>
+                    <ul class="mtlist-unstyled">
+                        <li><a href="@Url.Action("CreateTrainer")">Create Trainer</a></li>
+                        <li><a href="@Url.Action("AllTrainers")">All Trainers</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.mswaves-effect').click(function () {
+        $('ul .mslist-unstyled').toggleClass("show");
+        $('ul .first').toggleClass("rotate");
+    });
+
+    $('.mtwaves-effect').click(function () {
+        $('ul .mtlist-unstyled').toggleClass("show");
+        $('ul .second').toggleClass("rotate");
+    });
+</script>

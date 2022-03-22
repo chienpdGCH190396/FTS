@@ -1,0 +1,73 @@
+﻿@model FTS.Models.CreateAccountForm
+
+@{
+    ViewBag.Title = "Create Trainer";
+}
+
+<h1 class="text-center" style="font-size: 55px; font-weight: 300;">CREATE TRAINER</h1>
+<div class="mt-6 ml-6 mr-6">
+    @using (Html.BeginForm("CreateTrainer", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email, new { @class = "col-sm-2 col-form-label" })
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.Label("Role", new { @class = "col-sm-2 col-form-label" })*@
+            <div class="col-sm-10">
+                @*@Html.DropDownList("UserRoles", (SelectList)ViewBag.Name, " ")*@
+                <select id="UserRoles" name="UserRoles" hidden>
+                    <option id="Trainer" selected="true" value="Trainer">Trainer</option>
+                </select>
+            </div>
+        </div>
+
+        @Html.TextBoxFor(m => m.Role, new { @class = "form-control", Value = "Trainer", type = "hidden" })
+
+        <button type="submit" class="btn btn-primary" style="margin-right: 15px">Submit</button>
+
+        <a href="@Url.Action("CreateStaff", "Admin")" type="button" class="btn btn-primary">Reset</a>
+
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

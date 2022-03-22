@@ -1,0 +1,126 @@
+﻿@model IEnumerable<FTS.Models.UserEntity>
+
+@{
+    ViewBag.Title = "All Trainees";
+}
+
+<h1 class="text-center" style="font-size: 55px; font-weight: 300;">MANAGE TRAINEES</h1>
+
+<div class="mt-6 ml-6 mr-6">
+    <div class="mb-5">
+        @using (Html.BeginForm("SearchTrainee", "Staff", FormMethod.Get))
+        {
+            //the following are search options
+            <b class="mr-4">Search Option:</b>
+            @Html.RadioButton("option", "Name") <b class="mr-4">Name</b>
+            @Html.RadioButton("option", "MainProgrammingLanguage")<b class="mr-4"> Programming Language</b>
+            @Html.RadioButton("option", "TOEIC")<b class="mr-4"> TOEIC Score</b>
+            @Html.TextBox("search") <input type="submit" name="submit" value="Search" />
+        }
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">@Html.DisplayNameFor(x => x.Name)</th>
+                <th scope="col">@Html.DisplayNameFor(x => x.MainProgrammingLanguage)</th>
+                <th scope="col">@Html.DisplayNameFor(x => x.TOEIC)</th>
+                <th scope="col">@Html.DisplayNameFor(x => x.Department)</th>
+                <th scope="col">@Html.DisplayNameFor(x => x.Location)</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan = "3" > Records not found </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var b in Model)
+                    {
+                        <tr>
+                            <td></td>
+                            <td>@Html.DisplayFor(model => b.Name)</td>
+                            <td>@Html.DisplayFor(model => b.MainProgrammingLanguage)</td>
+                            <td>@Html.DisplayFor(model => b.TOEIC)</td>
+                            <td>@Html.DisplayFor(model => b.Department)</td>
+                            <td>@Html.DisplayFor(model => b.Location)</td>
+                            <td><a href="@Url.Action("UpdateTrainee", new { id = b.Id })" type="button" class="btn btn-success">Edit</a></td>
+                            <td>
+                                <a type="button"
+                                   data-trainee="@String.Format("{0}|{1}",
+                                    b.ToSeparatedString("|"),
+                                    Url.Action("DeleteTraineeAccount", new { id = b.Id }))"
+                                   data-toggle="modal" data-target="#DeleteTrainee" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        }
+                    }
+                }
+            </tbody>
+    </table>
+</div>
+
+@section alertdialog{
+    <div class="modal" tabindex="-1" id="DeleteTrainee" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Delete Trainee</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="deleteForm" method="post">
+                    <div class="modal-body">
+                        <fieldset disabled>
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" name="username">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="username">Email</label>
+                                <input type="text" class="form-control" id="email" name="email">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="username">Role</label>
+                                <input type="text" class="form-control" id="role" name="role">
+                            </div>
+                            <p>Do you want to delete this account?</p>
+                        </fieldset>
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-primary" value="Delete">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $('document').ready(function () {
+            $('a[data-trainee]').on('click', function (evt) {
+                let sData = $(this).attr('data-trainee').split("|");
+                console.log(sData);
+                $('#id').attr('value', sData[0]);
+                $('#username').attr('value', sData[2]);
+                $('#email').attr('value', sData[3]);
+                $('#role').attr('value', sData[4]);
+                $('#deleteForm').attr('action', sData[5]);
+            });
+        });
+    </script>
+}
+

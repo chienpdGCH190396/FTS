@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNet.Identity
+
+<div class="wrapper d-flex">
+    <div class="sidebar">
+        <h1 class="topLogo hidden-sm hidden-sm hidden-xs" style="text-align: center">FPT Training System</h1>
+        <div class="user-details">
+            <div class="pull-left">
+                <img src="~/images/img_avatar.png" style="width: 45px;" />
+            </div>
+            <div class="user-info">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <b style="font-size:25px">
+                            @User.Identity.GetUserName()
+                        </b>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+                        }
+                    </div>
+                </li>
+
+                <p class="text-muted m-0 text-capitalize" style="padding-left:10px">Administrator</p>
+            </div>
+        </div>
+        <div id="sidebar-menu" ng-controller="sliderMenu" class="ng-scope">
+
+            <ul>
+                <li class="has_sub">
+                    <a href="#" class="mswaves-effect">Manage Staff<span class="fas fa-caret-down first"></span></a>
+                    <ul class="mslist-unstyled">
+                        <li><a href="@Url.Action("CreateStaff")">Create Staff</a></li>
+                        <li><a href="@Url.Action("AllStaffs")">All Staffs</a></li>
+                    </ul>
+                </li>
+                <li class="has_sub">
+                    <a href="#" class="mtwaves-effect">Manage Trainer<span class="fas fa-caret-down second"></span></a>
+                    <ul class="mtlist-unstyled">
+                        <li><a href="@Url.Action("CreateTrainer")">Create Trainer</a></li>
+                        <li><a href="@Url.Action("AllTrainers")">All Trainers</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.mswaves-effect').click(function () {
+        $('ul .mslist-unstyled').toggleClass("show");
+        $('ul .first').toggleClass("rotate");
+    });
+
+    $('.mtwaves-effect').click(function () {
+        $('ul .mtlist-unstyled').toggleClass("show");
+        $('ul .second').toggleClass("rotate");
+    });
+</script>
